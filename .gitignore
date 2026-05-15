@@ -1,0 +1,93 @@
+# Local configuration
+.env
+
+# =============================================================================
+# Atari 8-bit Build Artifacts
+# =============================================================================
+
+# Assembled / compiled program files
+*.xex
+*.com
+*.exe
+*.obx
+
+# Assembler output
+*.lst
+*.sym
+*.lab
+
+# cc65 intermediate files
+*.o
+*.s
+
+# Disk and tape images (generated - not source assets)
+*.atr
+*.xfd
+*.cas
+*.car
+
+# Compressed output
+*.exo
+*.zx0
+
+# =============================================================================
+# Atari800 Emulator
+# =============================================================================
+
+atari800.cfg
+*.sav
+*.a8s
+
+# =============================================================================
+# OS
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# =============================================================================
+# Editors
+# =============================================================================
+
+# Vim / Neovim
+*.swp
+*.swo
+*~
+
+# Emacs
+\#*\#
+.#*
+
+# JetBrains (IntelliJ, CLion, PyCharm, etc.)
+.idea/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Zed
+.zed/
+
+# =============================================================================
+# AI tools
+# =============================================================================
+
+.claude
+.cursor
+.aider*
+.copilot
+.codeium
