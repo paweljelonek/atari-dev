@@ -107,17 +107,19 @@ info "Installing xasm assembler..."
 XASM_BIN="$BIN_DIR/xasm"
 if [ ! -f "$XASM_BIN" ]; then
     cd "$INSTALL_DIR"
-    git clone --depth 1 https://github.com/pfusik/xasm.git xasm-src
+    [ -d "xasm-src" ] || git clone --depth 1 https://github.com/pfusik/xasm.git xasm-src
     cd xasm-src
-    if [ -f "Makefile" ]; then
+    if [ -f "Makefile" ] && (command -v dmd &>/dev/null || command -v ldc2 &>/dev/null); then
         make -j"$(nproc)"
         cp xasm "$BIN_DIR/"
-    elif command -v fpc &>/dev/null; then
+        ok "xasm installed."
+    elif command -v fpc &>/dev/null && [ -f "xasm.pas" ]; then
         fpc xasm.pas -o"$BIN_DIR/xasm" 2>&1 | tail -5
+        ok "xasm installed (via fpc)."
     else
-        warn "xasm: no build method available - skipping."
+        warn "xasm: skipping - requires 'dmd' or 'ldc2' (D compiler) to build."
+        warn "  Install with: sudo apt-get install ldc  OR  https://dlang.org/download.html"
     fi
-    ok "xasm installed."
     cd "$INSTALL_DIR"
 else
     ok "xasm already installed."
