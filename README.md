@@ -24,7 +24,8 @@ atari-dev/
 ├── .env.dist          - configuration template
 ├── .gitignore
 ├── LICENSE
-├── setup-atari-dev.sh - install all tools (Linux Mint / Ubuntu / Debian)
+├── setup.sh           - install all tools (Linux Mint / Ubuntu / Debian)
+├── remove.sh          - uninstall all tools installed by setup.sh
 ├── Makefile           - build and run projects
 └── examples/
     ├── hello-asm/     - Hello World in 6502 assembly (MADS)
@@ -38,23 +39,51 @@ Projects live separately in `~/Projects/atari-projects/` - each as its own git r
 
 ### 1. Install tools
 
+**Option A — one-liner (no cloning needed):**
+
 ```bash
-./setup-atari-dev.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/paweljelonek/atari-dev/develop/setup.sh)
+```
+
+**Option B — clone the repo first:**
+
+```bash
+git clone https://github.com/paweljelonek/atari-dev.git
+cd atari-dev
+./setup.sh
 ```
 
 > 🐧 **Linux only - Ubuntu / Linux Mint / Debian and derivatives.**
 > 
 > The script uses `apt` and assumes a Debian-based system. It will **not** work on Arch, Fedora, openSUSE or other distributions. Support for other distros may appear someday - or it may not, depending on available free time.
 
-Installs: MADS, xasm, cc65, Atari800 emulator, dir2atr, exomizer, zx0.
+Installs: MADS, xasm, cc65, Atari800 emulator, dir2atr, adir, exomizer, zx0.
 
-Tools are installed in three locations:
+| Tool | Binary path | Source path | How |
+|------|-------------|-------------|-----|
+| `atari800` | system (`/usr/local/bin/`) | `~/.atari-dev/atari800-src/` | apt first, source as fallback |
+| `mads` | `~/.local/bin/mads` | `~/.atari-dev/mads-src/` | prebuilt binary or fpc |
+| `xasm` | `~/.local/bin/xasm` | `~/.atari-dev/xasm-src/` | requires `dmd` or `ldc2`; skipped with warning if absent |
+| `cl65` / `cc65` | `~/.local/bin/` | `~/.atari-dev/cc65-src/` | always built from source |
+| `dir2atr` | `~/.local/bin/dir2atr` | `~/.atari-dev/dir2atr-src/` | built from source |
+| `adir` | system (apt) | — | `atari-tools` package |
+| `exomizer` | `~/.local/bin/exomizer` | `~/.atari-dev/exomizer-src/` | built from source |
+| `zx0` | `~/.local/bin/zx0` | `~/.atari-dev/zx0-src/` | built from source |
 
-| Location          | What                                               |
-|-------------------|----------------------------------------------------|
-| system (apt)      | `atari800`, `atari-tools`, `cc65`                  |
-| `~/.atari-dev/`   | source builds and archives                         |
-| `~/.local/bin/`   | compiled binaries and wrappers                     |
+Build dependencies installed via apt: `build-essential`, `git`, `curl`, `wget`, `cmake`, `libsdl2-dev`, `libpng-dev`, `zlib1g-dev`, `freeglut3-dev`, `libxi-dev`, `libxmu-dev`.
+
+### Uninstall
+
+```bash
+./remove.sh
+```
+
+Removes all binaries from `~/.local/bin/`, source directories from `~/.atari-dev/`, cc65 platform files from `~/.local/share/cc65/`, and PATH entries from `.bashrc`/`.zshrc`. Asks for confirmation before doing anything.
+
+> `atari800` and `atari-tools` are **not** removed automatically (installed system-wide via apt). To remove them manually:
+> ```bash
+> sudo apt-get remove atari800 atari-tools
+> ```
 
 ### 2. Atari OS ROMs
 
