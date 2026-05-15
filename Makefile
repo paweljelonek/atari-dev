@@ -64,7 +64,7 @@ all: _require_dir
 		$(CC65) -t atarixl -O -o $(XEX) $(PROJ_DIR)/main.c; \
 	elif [ -f "$(PROJ_DIR)/main.asm" ]; then \
 		echo ">>> Assembling: $(PROJ_DIR)/main.asm"; \
-		$(MADS) $(PROJ_DIR)/main.asm -o:$(XEX) -s:$(SYM); \
+		$(MADS) $(PROJ_DIR)/main.asm -o:$(XEX) -t:$(SYM); \
 	else \
 		echo "ERROR: No source found in $(PROJ_DIR) (expected main.c or main.asm)" && exit 1; \
 	fi
