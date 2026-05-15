@@ -31,7 +31,7 @@ start
     sta  ICBAL
     lda  #>msg
     sta  ICBAH
-    lda  #<msg_end-msg
+    lda  #<(msg_end-msg)
     sta  ICBLL
     lda  #0
     sta  ICBLH
